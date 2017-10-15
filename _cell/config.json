@@ -1,3 +1,4 @@
 {
+  "ports": ["9080"],
   "stem": "xirsys/base"
 }
