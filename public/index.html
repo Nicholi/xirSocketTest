@@ -10,7 +10,7 @@
   <script>
   document.addEventListener("DOMContentLoaded", function(event) {
     let isSecure = window.location.protocol === 'https:';
-    let ws = new WebSocket(`${isSecure ? 'wss' : 'ws'}://${window.location.hostname}:${window.location.port}/ws`);
+    let ws = new WebSocket(`${isSecure ? 'wss' : 'ws'}://${window.location.hostname}:${window.location.port}${window.location.pathname}/ws`);
 
     ws.onerror = (event) => {
       console.error(event.data, event);
