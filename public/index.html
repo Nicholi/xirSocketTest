@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>xirSocketTest</title>
+</head>
+
+<body>
+  <script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    let isSecure = window.location.protocol === 'https:';
+    let ws = new WebSocket(`${isSecure ? 'wss' : 'ws'}://${window.location.hostname}:${window.location.port}/ws`);
+
+    ws.onerror = (event) => {
+      console.error(event.data, event);
+    };
+
+    ws.onmessage = (event) => {
+      console.log(event.data);
+    };
+
+    ws.onopen = (event) => {
+      console.log('Connection opened');
+      ws.send('Hello World!');
+    };
+  });
+  </script>
+</body>
+</html>
