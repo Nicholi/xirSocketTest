@@ -2,7 +2,7 @@ const http = require('http');
 const https = require('https');
 
 const Express = require('express');
-const ExpressWs = require('express-ws');
+const ExpressWs = require('express-uws');
 
 let isSecure = false;
 
