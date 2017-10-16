@@ -10,21 +10,44 @@
   <script>
   document.addEventListener("DOMContentLoaded", function(event) {
     let isSecure = window.location.protocol === 'https:';
-    let ws = new WebSocket(`${isSecure ? 'wss' : 'ws'}://${window.location.hostname}:${window.location.port}${window.location.pathname}/ws`);
+    let path = window.location.pathname.endsWith('/') ? window.location.pathname.substring(0, -1) : window.location.pathname;
+    let baseUrl = `${window.location.hostname}:${window.location.port}${path}`;
+
+    let xhr = ajaxRequest(`${isSecure ? 'https' : 'http'}://${baseUrl}/app`);
+    let ws = websocketRequest(`${isSecure ? 'wss' : 'ws'}://${baseUrl}/ws`);
+  });
+
+  function ajaxRequest(url, method = 'GET') {
+    let xhr = new XMLHttpRequest();
+    xhr.open(method, url);
+    xhr.onload = (event) => {
+      console.log('HTTP RESPONSE', xhr.status, xhr.responseText);
+    };
+    xhr.onerror = (event) => {
+      console.error('HTTP', event);
+    };
+
+    xhr.send();
+
+    return xhr;
+  }
+
+  function websocketRequest(url) {
+    let ws = new WebSocket(url);
 
     ws.onerror = (event) => {
-      console.error(event.data, event);
+      console.error('WS', event);
     };
 
     ws.onmessage = (event) => {
-      console.log(event.data);
+      console.log('WS RESPONSE', event.data);
     };
 
     ws.onopen = (event) => {
-      console.log('Connection opened');
+      console.log('WS connection opened');
       ws.send('Hello World!');
     };
-  });
+  }
   </script>
 </body>
 </html>

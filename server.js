@@ -33,14 +33,14 @@ let wss = expressWsResult.getWss();
 
 app.get('/app', (req, res) => {
   console.log('Received http request');
-  res.send('Hello World');
+  res.send('Hello World: HTTP');
 });
 
 app.ws('/ws', (ws, req) => {
   console.log('Received ws connection');
   ws.on('message', (msg) => {
     console.log('Received ws request');
-    ws.send('Goodbye World');
+    ws.send('Hello World: WS');
   });
 });
 
